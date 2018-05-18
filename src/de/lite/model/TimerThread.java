@@ -15,6 +15,7 @@ public class TimerThread {
 
     private SimpleDateFormat formater;
     private AtomicLong startTime;
+    private AtomicLong roundTime;
     private AtomicLong actTime;
     private AtomicBoolean running;
 
@@ -39,6 +40,7 @@ public class TimerThread {
 
     public void startTimer() {
         startTime = new AtomicLong(System.currentTimeMillis());
+        roundTime = new AtomicLong(0L);
         actTime = new AtomicLong(0L);
         running = new AtomicBoolean(true);
 
@@ -46,13 +48,13 @@ public class TimerThread {
         executor.execute(timer);
     }
 
-    public String startNewRound() {
-        String _temp = formater.format(new Date(actTime.get()));
+    public String getRoundTime() {
+        long _tempTime = actTime.get();
 
-        startTime.set(System.currentTimeMillis());
-        actTime.set(0L);
+        String roundTimeString = formater.format(new Date(_tempTime - roundTime.get()));
+        roundTime.set(_tempTime);
 
-        return _temp;
+        return roundTimeString;
     }
 
     public String stopTimer() {

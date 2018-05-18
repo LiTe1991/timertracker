@@ -35,27 +35,37 @@ public class Stopuhr {
                     controller.startTimer();
                 } else {
                     DefaultListModel _temp = (DefaultListModel) list1.getModel();
-                    _temp.set(i - 1, controller.startNewRound());
+                    _temp.set(i - 1, controller.getRoundTime());
                     list1.setModel(_temp);
                 }
 
-                if ((i + 1) == controller.getRounds()) {
-                    
+                if (i == controller.getRounds()) {
+                    setTimeLabel(controller.stopTimer());
+
+                    setNameOfButton("Start");
+
+                    controller.resetActRound();
+                } else {
+                    controller.incrementActRounds();
                 }
 
-
-                controller.incrementActRounds();
+                if ((i + 1) == controller.getRounds())
+                    setNameOfButton("Messung abschließen");
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String _temp = controller.stopTimer();
+                controller.stopTimer();
 
                 setNameOfButton("Start");
 
                 controller.resetActRound();
+
+                setListModel((int) spinner1.getValue());
+
+                setTimeLabel("00:00.000");
             }
         });
 

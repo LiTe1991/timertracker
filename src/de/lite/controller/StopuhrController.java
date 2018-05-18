@@ -49,8 +49,8 @@ public class StopuhrController {
         executor.execute(guiThread);
     }
 
-    public String startNewRound() {
-        return timer.startNewRound();
+    public String getRoundTime() {
+        return timer.getRoundTime();
     }
 
     public String stopTimer() {
